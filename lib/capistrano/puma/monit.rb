@@ -21,10 +21,12 @@ module Capistrano
     end
 
     def sudo_if_needed(command)
-      if fetch(:puma_monit_use_sudo)
-        sudo command
-      else
-        execute command
+      on roles(fetch(:puma_role)) do
+        if fetch(:puma_monit_use_sudo)
+          sudo command
+        else
+          execute command
+        end
       end
     end
   end
